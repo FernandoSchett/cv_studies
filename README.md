@@ -1,23 +1,21 @@
-### This READ.md template was written based on this [repository](https://github.com/FernandoSchett/github_readme_template).
-
-<h1 align="center">🟠 Application Title 🟠</h1>
+<h1 align="center">👁️ Computer Vision Studies 👁️</h1>
 
 <div align="center">
 	<a href="link_for_webite">
-	<img height = "250em" src = "https://github.com/FernandoSchett/github_readme_template/assets/80331486/4e4d24ee-efce-41d9-873b-3ececaf1cdd5" />
+	<img height = "250em" src = "https://github.com/FernandoSchett/cv_studies/assets/80331486/6fd96a72-8d2e-43fb-b3a4-e97acec0c892" />
     </a>
 </div>
 
 ## Developed by 💻:
-- [<you_name>](https://github.com/FernandoSchett).
+
+- [Fernando Schetitni](https://github.com/FernandoSchett).
 
 ## Special thanks to 🥰:
-- [<person_name>](https://github.com/<profile_username>), Your experience and knowledge have been invaluable to our progress.
+
+- [Lucas Amparo](https://github.com/<profile_username>), your experience and knowledge have been invaluable to our progress.
 
 
 ## About 🤔:
-
-## Summary 📝:
 
 ## Resourses 🧑‍🔬:
 
@@ -26,12 +24,6 @@
 
 
 ## Results 📈:
-
-## Routes 🛣️:
-Every Route from the API can be found in [swagger](). 
-
--
--
 
 ## Dependencies 🚚:
 
@@ -52,52 +44,6 @@ Make sure you have all Dependencies before running the project.
 First, clone this repository. After that, simply execute the ```file_name``` file with the command:
 
     sudo command_for_running_project
-
-## How to install 🔬:
-
-## Screens 🎬:
-
-<app_name> screens were developed to turn out like [figma](link_for_figma) screens:
-
-<div align="center">
-	<a href="">
-	<img height = "250em" src = "https://github.com/FernandoSchett/github_readme_template/assets/80331486/4e4d24ee-efce-41d9-873b-3ececaf1cdd5" />
-    </a>
-</div>
-<h4 align="center">Figure 1 - Screens from <app_name> </h4>
-
-
-## UML‍ 💬:
-
-Heres the UML that represents how the application works with their classes.
-
-<div align="center">
-	<a href="">
-	<img height = "250em" src = "https://github.com/FernandoSchett/github_readme_template/assets/80331486/4e4d24ee-efce-41d9-873b-3ececaf1cdd5" />
-    </a>
-</div>
-<h4 align="center">Figure 2 - <app_name> UML.</h4>
-
-## Logic Model 🧮:
-
-Here's the logic model that represents how the code works with their classes.
-
-<div align="center">
-	<a href="">
-	<img height = "250em" src = "https://github.com/FernandoSchett/github_readme_template/assets/80331486/4e4d24ee-efce-41d9-873b-3ececaf1cdd5" />
-    </a>
-</div>
-<h4 align="center">Figure 3 - Logic Model.</h4>
-
-## Database 🗃️:
-
-<div align="center">
-	<a href="">
-	<img height = "250em" src = "https://github.com/FernandoSchett/github_readme_template/assets/80331486/4e4d24ee-efce-41d9-873b-3ececaf1cdd5" />
-    </a>
-</div>
-
-<h4 align="center">Figure 4 - Relational Model Database.</h4>
 
 ## Development Process ⚙️:
 
