@@ -1,0 +1,39 @@
+# Arquivos executáveis
+*.exe
+*.out
+
+# Arquivos de objeto
+*.o
+*.obj
+
+# Arquivos gerados pelo CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Arquivos gerados pelo Make
+Makefile
+Makefile.in
+
+# Diretório de compilação
+build/
+
+# Arquivos de configuração do editor
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.swp
+*~
+*.bak
+*.tmp
+
+# Logs
+*.log
+
+# Arquivos de dependências
+.depend/
+
+# Arquivos de saída do OpenCV
+output/
