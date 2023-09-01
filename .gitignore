@@ -37,3 +37,6 @@ build/
 
 # Arquivos de saída do OpenCV
 output/
+
+dataset/
+
