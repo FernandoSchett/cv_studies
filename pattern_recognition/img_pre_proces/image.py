@@ -32,6 +32,8 @@ class Imagem:
             os.makedirs(path)
         path = os.path.join(path, 'rgb_histogram.png')
         plt.savefig(path)
+        plt.close()
+
 
     def gen_hist_opp(self, path):
 
@@ -57,6 +59,8 @@ class Imagem:
             os.makedirs(path)
         path = os.path.join(path, 'opp_histogram.png')
         plt.savefig(path)
+        plt.close()
+
     
     def gen_tcolor_dist(self, path):
         r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
@@ -85,16 +89,18 @@ class Imagem:
             os.makedirs(path)
         path = os.path.join(path, 'ctr_histogram.png')
         plt.savefig(path)
+        plt.close()
+
 
     def save(self, path):
         #print(skimage.img_as_ubyte(self.image))
         io.imsave(path, skimage.img_as_ubyte(self.image))
 
     def int_change(self, value):
-        self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
+        self.image = np.clip(self.image + value, 0, 255).astype(np.uint8)
     
     def int_shift(self, value):
-        self.image = np.clip(self.image + value, 0, 255).astype(np.uint8)
+        self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
 
          
 
