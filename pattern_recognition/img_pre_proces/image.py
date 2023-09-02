@@ -2,21 +2,22 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 import skimage
-from skimage import io, color
+from skimage import io
 from skimage.exposure import histogram
 
 class Imagem:
     def __init__(self, img_path, image):
         self.img_path = img_path
+        self.orignal = image
         self.image = image
 
+    def reset(self):
+        self.image = self.orignal
+
     def gen_hist_rgb(self, path):
-        red_channel = self.image[:, :, 0]
-        green_channel = self.image[:, :, 1]
-        blue_channel = self.image[:, :, 2]
-        hist_red, bins = np.histogram(red_channel.flatten(), bins=256, range=[0, 256])
-        hist_green, _ = np.histogram(green_channel.flatten(), bins=256, range=[0, 256])
-        hist_blue, _ = np.histogram(blue_channel.flatten(), bins=256, range=[0, 256])
+        hist_red, bins = histogram(self.image[:, :, 0])
+        hist_green, _ = histogram(self.image[:, :, 1])
+        hist_blue, _ = histogram(self.image[:, :, 2])
 
         plt.figure(figsize=(10, 6))
         plt.title('RGB Histogram')
@@ -91,9 +92,12 @@ class Imagem:
         plt.savefig(path)
         plt.close()
 
+    def gen_all(self, path):
+        self.gen_hist_rgb(path)
+        self.gen_hist_opp(path)
+        self.gen_tcolor_dist(path)
 
     def save(self, path):
-        #print(skimage.img_as_ubyte(self.image))
         io.imsave(path, skimage.img_as_ubyte(self.image))
 
     def int_change(self, value):
@@ -102,6 +106,27 @@ class Imagem:
     def int_shift(self, value):
         self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
 
+    def gen_painel(self, path):
+        r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
+
+        hist_red, bins_r = histogram(r)
+        hist_green, bins_g = histogram(g)
+        hist_blue, bins_b = histogram(b)
+
+        O1 = (r - g) / np.sqrt(2)
+        O2 = (r + g - 2 * b) / np.sqrt(6)
+        O3 = (r + g + b) / np.sqrt(3)
+        hist_O1, bins_O1 = histogram(O1)
+        hist_O2, bins_O2 = histogram(O2)
+        hist_O3, bins_O3 = histogram(O3)
+
+        mean_r, std_r = np.mean(r), np.std(r)
+        mean_g, std_g = np.mean(g), np.std(g)
+        mean_b, std_b = np.mean(b), np.std(b)
+        
+        hist_r, bins_r = histogram((r - mean_r)/std_r)
+        hist_g, bins_g = histogram((g - mean_g)/std_g)
+        hist_b, bins_b = histogram((b - mean_b)/std_b)
          
 
             
