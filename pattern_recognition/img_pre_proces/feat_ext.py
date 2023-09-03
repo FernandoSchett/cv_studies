@@ -10,8 +10,8 @@ for filename in image_files:
     image_path = os.path.join(imgs_folder, filename)
     image = io.imread(image_path)
 
-    op = ['_normal.png','_shift.png','_change.png','_change_shift.png']
-    img = Imagem(image_path, image)
+    op = ['_normal','_shift','_change','_change_shift']
+    img = Imagem(image_path, image, filename)
     
     for i in range(len(op)):
         if '_shift' in op[i]:
@@ -20,5 +20,5 @@ for filename in image_files:
             img.int_change(30)       
         save_folder = os.path.join(imgs_folder, filename + op[i])
         img.gen_all(save_folder)
-        img.save(os.path.join(save_folder, filename + op[i]))
+        img.save(os.path.join(save_folder, img.name))
         img.reset()

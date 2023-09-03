@@ -6,10 +6,11 @@ from skimage import io
 from skimage.exposure import histogram
 
 class Imagem:
-    def __init__(self, img_path, image):
+    def __init__(self, img_path, image, name="imagem.png"):
         self.img_path = img_path
         self.orignal = image
         self.image = image
+        self.name = name
 
     def reset(self):
         self.image = self.orignal
@@ -20,7 +21,7 @@ class Imagem:
         hist_blue, _ = histogram(self.image[:, :, 2])
 
         plt.figure(figsize=(10, 6))
-        plt.title('RGB Histogram')
+        plt.title('RGB Histogram - ' + self.name)
         plt.xlabel('Pixel Value')
         plt.ylabel('Frequency')
         plt.plot(hist_red, color='red', label='Red Channel')
@@ -47,7 +48,7 @@ class Imagem:
         hist_O3, bins_O3 = histogram(O3)
 
         plt.figure(figsize=(10, 6))
-        plt.title("Histogramas de Oponentes")
+        plt.title("Histogramas de Oponentes - " + self.name)
         plt.plot(bins_O1, hist_O1, label="O1 (R-G)")
         plt.plot(bins_O2, hist_O2, label="O2 (Y-B)")
         plt.plot(bins_O3, hist_O3, label="O3 (Intensity)")
@@ -75,7 +76,7 @@ class Imagem:
         hist_b, bins_b = histogram((b - mean_b)/std_b)
 
         plt.figure(figsize=(10, 6))
-        plt.title("Histogramas de Cores Transformadas")
+        plt.title("Histogramas de Cores Transformadas - " + self.name)
         plt.plot(bins_r, hist_r, label="CTR Red")
         plt.plot(bins_g, hist_g, label="CTR Green")
         plt.plot(bins_b, hist_b, label="CTR Blue")
@@ -105,28 +106,3 @@ class Imagem:
     
     def int_shift(self, value):
         self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
-
-    def gen_painel(self, path):
-        r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
-
-        hist_red, bins_r = histogram(r)
-        hist_green, bins_g = histogram(g)
-        hist_blue, bins_b = histogram(b)
-
-        O1 = (r - g) / np.sqrt(2)
-        O2 = (r + g - 2 * b) / np.sqrt(6)
-        O3 = (r + g + b) / np.sqrt(3)
-        hist_O1, bins_O1 = histogram(O1)
-        hist_O2, bins_O2 = histogram(O2)
-        hist_O3, bins_O3 = histogram(O3)
-
-        mean_r, std_r = np.mean(r), np.std(r)
-        mean_g, std_g = np.mean(g), np.std(g)
-        mean_b, std_b = np.mean(b), np.std(b)
-        
-        hist_r, bins_r = histogram((r - mean_r)/std_r)
-        hist_g, bins_g = histogram((g - mean_g)/std_g)
-        hist_b, bins_b = histogram((b - mean_b)/std_b)
-         
-
-            
