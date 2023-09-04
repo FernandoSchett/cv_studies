@@ -11,17 +11,37 @@ class Imagem:
         self.orignal = image
         self.image = image
         self.name = name
-
+    
+    def get_name(self):
+        return self.name
+    
     def reset(self):
         self.image = self.orignal
+    
+    def reset_hist():
+        plt.close()
 
-    def gen_hist_rgb(self, path):
+    def save(self, path):
+        io.imsave(path, skimage.img_as_ubyte(self.image))
+
+    def int_change(self, value):
+        self.image = np.clip(self.image + value, 0, 255).astype(np.uint8)
+    
+    def int_shift(self, value):
+        self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
+
+    def save_hist(self, path):
+        if not os.path.exists(path):
+            os.makedirs(path)
+        path = os.path.join(path, 'histogram.png')
+        plt.savefig(path)
+
+    def gen_hist_rgb(self):
         hist_red, bins = histogram(self.image[:, :, 0])
         hist_green, _ = histogram(self.image[:, :, 1])
         hist_blue, _ = histogram(self.image[:, :, 2])
 
-        plt.figure(figsize=(10, 6))
-        plt.title('RGB Histogram - ' + self.name)
+        plt.title(self.get_name())
         plt.xlabel('Pixel Value')
         plt.ylabel('Frequency')
         plt.plot(hist_red, color='red', label='Red Channel')
@@ -30,14 +50,7 @@ class Imagem:
         plt.legend()
         plt.grid()
 
-        if not os.path.exists(path):
-            os.makedirs(path)
-        path = os.path.join(path, 'rgb_histogram.png')
-        plt.savefig(path)
-        plt.close()
-
-
-    def gen_hist_opp(self, path):
+    def gen_hist_opp(self):
 
         r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
         O1 = (r - g) / np.sqrt(2)
@@ -47,8 +60,7 @@ class Imagem:
         hist_O2, bins_O2 = histogram(O2)
         hist_O3, bins_O3 = histogram(O3)
 
-        plt.figure(figsize=(10, 6))
-        plt.title("Histogramas de Oponentes - " + self.name)
+        plt.title(self.get_name())
         plt.plot(bins_O1, hist_O1, label="O1 (R-G)")
         plt.plot(bins_O2, hist_O2, label="O2 (Y-B)")
         plt.plot(bins_O3, hist_O3, label="O3 (Intensity)")
@@ -56,15 +68,9 @@ class Imagem:
         plt.ylabel("Frequência")
         plt.legend()
         plt.grid()
-        
-        if not os.path.exists(path):
-            os.makedirs(path)
-        path = os.path.join(path, 'opp_histogram.png')
-        plt.savefig(path)
-        plt.close()
 
     
-    def gen_tcolor_dist(self, path):
+    def gen_tcolor_dist(self):
         r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
         
         mean_r, std_r = np.mean(r), np.std(r)
@@ -75,8 +81,7 @@ class Imagem:
         hist_g, bins_g = histogram((g - mean_g)/std_g)
         hist_b, bins_b = histogram((b - mean_b)/std_b)
 
-        plt.figure(figsize=(10, 6))
-        plt.title("Histogramas de Cores Transformadas - " + self.name)
+        plt.title(self.get_name())
         plt.plot(bins_r, hist_r, label="CTR Red")
         plt.plot(bins_g, hist_g, label="CTR Green")
         plt.plot(bins_b, hist_b, label="CTR Blue")
@@ -85,24 +90,3 @@ class Imagem:
         plt.ylabel("Frequência")
         plt.legend()
         plt.grid()
-        plt.tight_layout()
-
-        if not os.path.exists(path):
-            os.makedirs(path)
-        path = os.path.join(path, 'ctr_histogram.png')
-        plt.savefig(path)
-        plt.close()
-
-    def gen_all(self, path):
-        self.gen_hist_rgb(path)
-        self.gen_hist_opp(path)
-        self.gen_tcolor_dist(path)
-
-    def save(self, path):
-        io.imsave(path, skimage.img_as_ubyte(self.image))
-
-    def int_change(self, value):
-        self.image = np.clip(self.image + value, 0, 255).astype(np.uint8)
-    
-    def int_shift(self, value):
-        self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
