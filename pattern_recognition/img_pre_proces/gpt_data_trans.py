@@ -1,31 +1,6 @@
 import os
-import skimage
-import copy
-from skimage import io, exposure, transform, filters
-
-def equalize_hist(image):
-    equalized_image = skimage.color.rgb2gray(image)
-    equalized_image = exposure.equalize_hist(equalized_image)  
-    equalized_image = skimage.img_as_ubyte(equalized_image)
-
-    return equalized_image
-
-def ganna_adjust(image):
-    gamma_image = skimage.img_as_ubyte(image)
-    gamma_image = exposure.adjust_gamma(gamma_image, 0.5, -1)
-    return gamma_image
-
-def gauss_filter(image):
-    gauss_image = filters.gaussian(image, 1.5, channel_axis=None)
-    gauss_image = skimage.img_as_ubyte(gauss_image)
-    return gauss_image
-
-
-def laplace_filter(image):
-    laplace_image = filters.laplace(image)
-    laplace_image = exposure.rescale_intensity(laplace_image, in_range=(-1, 1))
-    laplace_image = skimage.img_as_ubyte(laplace_image)
-    return laplace_image
+from skimage import io, exposure, filters, color
+from nclass_transformer import Transformer
 
 dataset_folder = './dataset'
 
@@ -41,14 +16,13 @@ for folder, subfolder, arq in os.walk(dataset_folder):
             for filename in image_files:
                 image_path = os.path.join(tr_folder, filename)
                 image = io.imread(image_path)
-                
-                image = transform.resize(image, [1024, 1024])
-                eq_image = equalize_hist(copy.deepcopy(image))
-                gamma_image = ganna_adjust(copy.deepcopy(image))
-                gauss_img = gauss_filter(copy.deepcopy(image))
-                print(filename)
-                lap_img = laplace_filter(copy.deepcopy(image))
-                
+
+                image = Transformer.alterar_tam(image, [1024, 1024])
+                eq_image = Transformer.equalize_hist(Transformer.to_gray(image.copy()))
+                gamma_image = Transformer.gamma_adjust(image.copy(), 0.5, -1)
+                gauss_img = Transformer.gauss_filter(image.copy(), 1.5)
+                lap_img = Transformer.laplace_filter(image.copy())
+
                 # Salvar Eq imgs              
                 equalized_filename = os.path.splitext(filename)[0] + '_equalized.png'
                 equalized_train_folder = os.path.join(equalized_subfolder, folder.split('/')[-2])
@@ -58,7 +32,6 @@ for folder, subfolder, arq in os.walk(dataset_folder):
 
                 equalized_path = os.path.join(equalized_train_folder, equalized_filename)
                 io.imsave(equalized_path, eq_image)  
-                
                 
                 # Salvar Gamma imgs
                 gamma_filename = os.path.splitext(filename)[0] + '_gamma.png'
