@@ -17,9 +17,11 @@
 
 ## About 🤔:
 
+This repository serves as a dedicated space to house my studies in the field of computer vision and deep learning. Its primary purpose is to store the materials I've developed, which are related to the Computer Vision course at SENAI CIMATEC. This coursework involves programming in C and C++ using OpenCV. Additionally, it includes my projects from the Advanced Mechatronics Topics IV course at UFBA in the 2023.2 semester. This course focuses on image processing and pattern recognition using deep learning techniques.
+
 ## Resourses 🧑‍🔬:
 
-- 
+- Pattern Recoggnition
 - 
 
 
@@ -39,19 +41,23 @@ For installing dependencies more quickly, you can run the following command at t
 
 Make sure you have all Dependencies before running the project.
 
-## How to run it 🏃:
+## How to run codes from here 🏃:
 
-First, clone this repository. After that, simply execute the ```file_name``` file with the command:
+First, clone this repository. In the top of each code file, has a manual with instructions for compiling, running, it's porpouse and other information. They usually look like the template below:
 
-    sudo command_for_running_project
-
-## Development Process ⚙️:
-
-Developers used [Trello]() to get things organized, each one using their own branch to code, using names to identify the commit type then merginng the features into develop branch. After testing, the group update the main branch. This application was developed in xx/xx/20xx until xx/xx/20xx.
+	/*
+	File:           file_name.ext
+	Last changed:   xx/xx/20xx xx:xx
+	Purpose:        Code for hard problems         
+	Authors:        Fernando Antonio Marques Schettini   
+	Usage: 
+		HowToCompile:   gcc file_name.cpp -o file_name
+		HowToExecute:   ./file_name           
+	*/ 
 
 ### Tools Used 🛠️: 
 
-- [Tool](http:link.com). 
+- [VSCODE](http:link.com).
 - 
 - 
 
@@ -61,7 +67,7 @@ For installing some tools more quickly, you can run the following command at ter
 	
 ## How to contribute 🫂:
 
-Feel free to create a new branch, fork the project, create a new Issue or make a pull request contact one of us to develop at <app_name>.
+Feel free to create a new branch, fork the project, create a new Issue or make a pull request contact one of us to develop at this repo.
 
 ## Licence 📜:
 

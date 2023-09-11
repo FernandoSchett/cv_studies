@@ -29,6 +29,7 @@ for filename in image_files:
             imgs[i].int_change(30)
         plt.title(imgs[i].get_name())
         plt.imshow(imgs[i].image)
+    plt.subplots(1, len(imgs), sharex=True, gridspec_kw={'height_ratios': [2, 2, 2, 2]})
     plt.tight_layout()
     plt.savefig(filename + feat[0] + '_comp.png')
     plt.close()
