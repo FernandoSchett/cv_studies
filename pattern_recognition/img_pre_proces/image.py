@@ -9,11 +9,8 @@ class Imagem:
     def __init__(self, img_path, image, name="imagem.png"):
         self.img_path = img_path
         self.orignal = image
-        self.image = image
+        self.image = image.copy()
         self.name = name
-    
-    def get_name(self):
-        return self.name
     
     def reset(self):
         self.image = self.orignal
@@ -25,7 +22,7 @@ class Imagem:
         io.imsave(path, skimage.img_as_ubyte(self.image))
 
     def int_change(self, value):
-        self.image = np.clip(self.image + value, 0, 255).astype(np.uint8)
+        self.image = self.image + value
     
     def int_shift(self, value):
         self.image = np.clip(self.image * value, 0, 255).astype(np.uint8)
@@ -72,7 +69,8 @@ class Imagem:
     
     def gen_tcolor_dist(self):
         r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
-        
+        #print(self.image[:, :, 0])
+        #print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         mean_r, std_r = np.mean(r), np.std(r)
         mean_g, std_g = np.mean(g), np.std(g)
         mean_b, std_b = np.mean(b), np.std(b)
@@ -90,3 +88,19 @@ class Imagem:
         plt.ylabel("Frequência")
         plt.legend()
         plt.grid()
+
+    # Getter for name
+    def get_name(self):
+        return self.name
+    
+    # Setter for name
+    def set_name(self, name):
+        self.name = name
+    
+    # Getter for image
+    def get_image(self):
+        return self.image
+    
+    # Setter for image
+    def set_image(self, image):
+        self.image = image

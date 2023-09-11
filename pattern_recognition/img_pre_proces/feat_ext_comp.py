@@ -19,6 +19,7 @@ for filename in image_files:
 
     plt.figure(figsize=(19, 10))
     plt.suptitle(filename)
+    
     #aplica tranformações
     for i in range(len(op)):
         plt.subplot(1, len(op), i+1)
@@ -33,6 +34,7 @@ for filename in image_files:
     plt.savefig(filename + feat[0] + '_comp.png')
     plt.close()
 
+    
     plt.figure(figsize=(19, 10))
     plt.suptitle("Histograma de Cores.")
     for j in range(len(imgs)):
