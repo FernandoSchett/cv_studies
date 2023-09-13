@@ -24,21 +24,7 @@ This repository serves as a dedicated space to house my studies in the field of 
 - [Pattern recognition in images](), a set of material aims to serve as a comprehensive guide for practical laboratory activities in the the Computer Vision and Pattern Recognition field.
 - [Computer vision course]().
 
-## Results 📈:
-
-## How to run codes from here 🏃:
-
-First, clone this repository. In the top of each code file, has a manual with instructions for compiling, running, it's porpouse and other information. They usually look like the template below:
-
-	/*
-	File:           file_name.ext
-	Last changed:   xx/xx/20xx xx:xx
-	Purpose:        Code for hard problems         
-	Authors:        Fernando Antonio Marques Schettini   
-	Usage: 
-		HowToCompile:   gcc file_name.cpp -o file_name
-		HowToExecute:   ./file_name           
-	*/ 
+## Results 📈: 
 	
 ## How to contribute 🫂:
 

@@ -1,18 +1,10 @@
-<h1 align="center">👁️ Computer Vision Studies 👁️</h1>
+<h1 align="center">🔎 Images pattern recognition 🔎</h1>
 
 <div align="center">
 	<a href="link_for_webite">
-	<img height = "250em" src = "https://github.com/FernandoSchett/cv_studies/assets/80331486/6fd96a72-8d2e-43fb-b3a4-e97acec0c892" />
+	<img height = "250em" src = "https://github.com/FernandoSchett/armazem/assets/80331486/8ac13ae3-8bc7-47e8-aedd-cf8aa98edc30" />
     </a>
 </div>
-
-## Developed by 💻:
-
-- [Fernando Schetitni](https://github.com/FernandoSchett).
-
-## Special thanks to 🥰:
-
-- [Lucas Amparo](https://github.com/<profile_username>), your experience and knowledge have been invaluable to our progress.
 
 
 ## About 🤔:
@@ -57,27 +49,19 @@ First, clone this repository. In the top of each code file, has a manual with in
 
 ### Tools Used 🛠️: 
 
-- [VSCODE](http:link.com).
-- 
+- [VSCode](http:link.com).
+-
 - 
 
 For installing some tools more quickly, you can run the following command at terminal, inside the clonned repository:
 
     sh ./dependencies/install_tools.sh
-	
-## How to contribute 🫂:
-
-Feel free to create a new branch, fork the project, create a new Issue or make a pull request contact one of us to develop at this repo.
-
-## Licence 📜:
-
-[Apache V2](https://choosealicense.com/licenses/apache-2.0/)
 
 ## References 📙:
 	
-[1] <last_author_name>, <first_author_name>. <work_title>. XX/XX/XX.
+[1] van de Sande, K. E. A., Gevers, T., and Snoek, C. G. M. (2010). Evaluating color
+descriptors for object and scene recognition. IEEE Transactions on Pattern Analysis and
+Machine Intelligence, 32(9):1582–1596.
 	
-[2] <work_title>, <author_name>. Avaliable in: <https://www.link.com>. Access in em XX/XX/XX.
-
 ### Important links 🔗:
 
