@@ -66,3 +66,4 @@ Machine Intelligence, 32(9):1582–1596.
 	
 ### Important links 🔗:
 
+- [Sinais e Sistemas - Uma aventura no espaço sideral.](https://youtu.be/cYozmo6lq5w?si=oo1t_IoSxGOMmIkZ)
