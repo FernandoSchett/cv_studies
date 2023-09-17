@@ -21,7 +21,7 @@ This repository serves as a dedicated space to house my studies in the field of 
 
 ## Resourses 🧑‍🔬:
 
-- [Pattern recognition in images](), a set of material aims to serve as a comprehensive guide for practical laboratory activities in the the Computer Vision and Pattern Recognition field.
+- [Pattern recognition in images](https://github.com/FernandoSchett/cv_studies/tree/main/pattern_recognition), a set of material aims to serve as a comprehensive guide for practical laboratory activities in the the Computer Vision and Pattern Recognition field.
 - [Computer vision course]().
 
 ## Results 📈: 
