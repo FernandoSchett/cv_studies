@@ -50,9 +50,9 @@ First, clone this repository. In the top of each code file, has a manual with in
 
 ### Tools Used 🛠️: 
 
-- [VSCode](http:link.com).
--
-- 
+- [VSCode](https://code.visualstudio.com/).
+- [OpenCV](https://opencv.org/).
+- [scikit-image](https://scikit-image.org/).
 
 For installing some tools more quickly, you can run the following command at terminal, inside the clonned repository:
 
