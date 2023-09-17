@@ -8,11 +8,11 @@
 
 ## About 🤔:
 
-My practices from the Advanced Mechatronics Topics IV course at UFBA in the 2023.2 semester. This course focuses on image processing and pattern recognition using deep learning techniques. You can check out the results reports that I did at [this](https://docs.google.com/document/d/1F-Nw7-t1BPtgF_CaDAa4xPIeDPsNzzenGKaPsVfX59E/edit?usp=sharing) link.
+My practices from the Advanced Mechatronics Topics IV course at UFBA in the 2023.2 semester. This course focuses on image processing and pattern recognition using deep learning techniques. Fell free to check out the results reports at [this](https://docs.google.com/document/d/1F-Nw7-t1BPtgF_CaDAa4xPIeDPsNzzenGKaPsVfX59E/edit?usp=sharing) link.
 
 ## Resourses 🧑‍🔬:
 
-- Image preprocessing.
+- Image preprocessing, check out all at [this](https://drive.google.com/drive/folders/1Jz18rqn5rmZc3P3cgSwTJR4RhUqF62wa?usp=sharing) link.
 - Color, Texture and form dataset features extraction.
 - Laboratory Practices Report with Methodology and Conclusion of Results.
 
