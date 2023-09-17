@@ -6,7 +6,6 @@
     </a>
 </div>
 
-
 ## About 🤔:
 
 This repository serves as a dedicated space to house my studies in the field of computer vision and deep learning. Its primary purpose is to store the materials I've developed, which are related to the Computer Vision course at SENAI CIMATEC. This coursework involves programming in C and C++ using OpenCV. Additionally, it includes my projects from the Advanced Mechatronics Topics IV course at UFBA in the 2023.2 semester. This course focuses on image processing and pattern recognition using deep learning techniques.
@@ -37,7 +36,7 @@ Make sure you have all Dependencies before running the project.
 
 First, clone this repository. In the top of each code file, has a manual with instructions for compiling, running, it's porpouse and other information. They usually look like the template below:
 
-	/*
+	"""
 	File:           file_name.ext
 	Last changed:   xx/xx/20xx xx:xx
 	Purpose:        Code for hard problems         
@@ -45,7 +44,9 @@ First, clone this repository. In the top of each code file, has a manual with in
 	Usage: 
 		HowToCompile:   gcc file_name.cpp -o file_name
 		HowToExecute:   ./file_name           
-	*/ 
+	Dependecies:
+		numpy
+	"""
 
 ### Tools Used 🛠️: 
 
