@@ -1,13 +1,11 @@
 import os
-from skimage import io, exposure, filters, color
-from nclass_transformer import Transformer
+import skimage
+import copy
+from skimage import io, exposure, transform, filters
 
 dataset_folder = './dataset'
 
-equalized_subfolder = os.path.join(dataset_folder, "eq_train")
-gamma_subfolder = os.path.join(dataset_folder, "gamma_train")
-gauss_subfolder = os.path.join(dataset_folder, "gaussiano_train")
-laplace_subfolder = os.path.join(dataset_folder, "laplace_train")
+to_gray_subfolder = os.path.join(dataset_folder, "_to_gray")
 
 for folder, subfolder, arq in os.walk(dataset_folder):
     if 'treino' == folder.split('/')[-1]: 
@@ -16,13 +14,14 @@ for folder, subfolder, arq in os.walk(dataset_folder):
             for filename in image_files:
                 image_path = os.path.join(tr_folder, filename)
                 image = io.imread(image_path)
-
-                image = Transformer.alterar_tam(image, [1024, 1024])
-                eq_image = Transformer.equalize_hist(Transformer.to_gray(image.copy()))
-                gamma_image = Transformer.gamma_adjust(image.copy(), 0.5, -1)
-                gauss_img = Transformer.gauss_filter(image.copy(), 1.5)
-                lap_img = Transformer.laplace_filter(image.copy())
-
+                
+                image = transform.resize(image, [1024, 1024])
+                eq_image = equalize_hist(copy.deepcopy(image))
+                gamma_image = ganna_adjust(copy.deepcopy(image))
+                gauss_img = gauss_filter(copy.deepcopy(image))
+                print(filename)
+                lap_img = laplace_filter(copy.deepcopy(image))
+                
                 # Salvar Eq imgs              
                 equalized_filename = os.path.splitext(filename)[0] + '_equalized.png'
                 equalized_train_folder = os.path.join(equalized_subfolder, folder.split('/')[-2])
@@ -32,6 +31,7 @@ for folder, subfolder, arq in os.walk(dataset_folder):
 
                 equalized_path = os.path.join(equalized_train_folder, equalized_filename)
                 io.imsave(equalized_path, eq_image)  
+                
                 
                 # Salvar Gamma imgs
                 gamma_filename = os.path.splitext(filename)[0] + '_gamma.png'
