@@ -8,13 +8,13 @@
 
 ## About 🤔:
 
-This repository serves as a dedicated space to house my studies in the field of computer vision and deep learning. Its primary purpose is to store the materials I've developed, which are related to the Computer Vision course at SENAI CIMATEC. This coursework involves programming in C and C++ using OpenCV. Additionally, it includes my projects from the Advanced Mechatronics Topics IV course at UFBA in the 2023.2 semester. This course focuses on image processing and pattern recognition using deep learning techniques.
+My practices from the Advanced Mechatronics Topics IV course at UFBA in the 2023.2 semester. This course focuses on image processing and pattern recognition using deep learning techniques. You can check out the results reports that I did at [this](https://docs.google.com/document/d/1F-Nw7-t1BPtgF_CaDAa4xPIeDPsNzzenGKaPsVfX59E/edit?usp=sharing) link.
 
 ## Resourses 🧑‍🔬:
 
-- Pattern Recoggnition
-- 
-
+- Image preprocessing.
+- Color, Texture and form dataset features extraction.
+- Laboratory Practices Report with Methodology and Conclusion of Results.
 
 ## Results 📈:
 
