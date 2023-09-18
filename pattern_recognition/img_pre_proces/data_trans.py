@@ -29,13 +29,13 @@ def laplace_filter(image):
 
 dataset_folder = './dataset'
 
-equalized_subfolder = os.path.join(dataset_folder, "eq_train")
-gamma_subfolder = os.path.join(dataset_folder, "gamma_train")
-gauss_subfolder = os.path.join(dataset_folder, "gaussiano_train")
-laplace_subfolder = os.path.join(dataset_folder, "laplace_train")
+equalized_subfolder = os.path.join(dataset_folder, "eq")
+gamma_subfolder = os.path.join(dataset_folder, "gamma")
+gauss_subfolder = os.path.join(dataset_folder, "gaussiano")
+laplace_subfolder = os.path.join(dataset_folder, "laplace")
 
 for folder, subfolder, arq in os.walk(dataset_folder):
-    if 'treino' == folder.split('/')[-1]: 
+    if 'treino' == folder.split('/')[-1] or 'teste' == folder.split('/')[-1]: 
         for tr_folder, sub_folder, arq in os.walk(folder):
             image_files = [f for f in os.listdir(tr_folder) if f.endswith('.jpg') or f.endswith('.JPG')]
             for filename in image_files:
@@ -43,11 +43,10 @@ for folder, subfolder, arq in os.walk(dataset_folder):
                 image = io.imread(image_path)
                 
                 image = transform.resize(image, [1024, 1024])
-                eq_image = equalize_hist(copy.deepcopy(image))
-                gamma_image = ganna_adjust(copy.deepcopy(image))
-                gauss_img = gauss_filter(copy.deepcopy(image))
-                print(filename)
-                lap_img = laplace_filter(copy.deepcopy(image))
+                eq_image = equalize_hist(image)
+                gamma_image = ganna_adjust(image)
+                gauss_img = gauss_filter(image)
+                lap_img = laplace_filter(image)
                 
                 # Salvar Eq imgs              
                 equalized_filename = os.path.splitext(filename)[0] + '_equalized.png'

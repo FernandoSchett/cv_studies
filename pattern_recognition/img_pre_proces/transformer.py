@@ -10,8 +10,8 @@ Dependecies:
     matplotlib
     numpy
 """
-
 from skimage import exposure, filters, transform, color
+import skimage
 
 class Transformer:
 
@@ -23,6 +23,7 @@ class Transformer:
     @staticmethod
     def to_gray(image):
         gray_image = color.rgb2gray(image)
+        gray_image = skimage.img_as_ubyte(gray_image)
         return gray_image
 
     @staticmethod
