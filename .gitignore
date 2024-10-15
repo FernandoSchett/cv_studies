@@ -41,3 +41,6 @@ output/
 dataset/
 __pycache__/
 
+
+# Dataset
+/pattern_recognition/data
