@@ -1,8 +1,12 @@
 import os
 import cv2
-from glob import glob
 import matplotlib.pyplot as plt
 import numpy as np
+from glob import glob
+
+from skimage.filters import gaussian
+from skimage import exposure
+from skimage import img_as_ubyte
 
 class ImageProcessor:
     def __init__(self, input_dir, output_dir=None, size=(256, 256)):
@@ -90,17 +94,23 @@ class ImageProcessor:
             self.operations[relative_path].append("equalize_histogram")  # Registrar operação
 
     def gamma_correction(self, gamma):
-        """Apply gamma correction to all images in memory."""
+        """Apply gamma correction to all images in memory using skimage.exposure.adjust_gamma."""
         for relative_path, img in self.images.items():
-            gamma_corrected = cv2.pow(img / 255.0, gamma) * 255.0
-            self.images[relative_path] = gamma_corrected
-            self.operations[relative_path].append(f"gamma_{gamma}")  # Registrar operação
+            # Aplicar a correção gama usando skimage
+            gamma_corrected = exposure.adjust_gamma(img, gamma)
+            # Atualizar a imagem corrigida
+            self.images[relative_path] = gamma_corrected.astype(img.dtype)  # Converter de volta para o tipo original
+            # Registrar a operação
+            self.operations[relative_path].append(f"gamma_{gamma}")
 
-    def gaussian_smoothing(self, kernel_size=(5, 5)):
-        """Apply Gaussian smoothing to all images in memory."""
+    def gaussian_smoothing(self, sigma=1):
+        """Apply Gaussian smoothing to all images in memory using skimage.filters.gaussian."""
         for relative_path, img in self.images.items():
-            self.images[relative_path] = cv2.GaussianBlur(img, kernel_size, 0)
-            self.operations[relative_path].append(f"gaussian_blur_{kernel_size[0]}x{kernel_size[1]}")  # Registrar operação
+            smoothed_img = gaussian(img, sigma=sigma, preserve_range=True)
+            # Atualizar a imagem suavizada
+            self.images[relative_path] = smoothed_img.astype(img.dtype)  # Converter de volta para o tipo original
+            # Registrar a operação
+            self.operations[relative_path].append(f"gaussian_blur_{sigma}")
     
     def convert_to_grayscale(self):
         """Convert all images in the dataset to grayscale."""
@@ -134,6 +144,7 @@ class ImageProcessor:
         for relative_path, img in self.images.items():
             img = img * a  # Multiplicar os canais R, G, B por a
             img = np.clip(img, 0, 255)  # Garantir que os valores estejam no intervalo [0, 255]
+            #self.images[relative_path] = img_as_ubyte(img)  
             self.images[relative_path] = img.astype(np.uint8)  # Garantir que a imagem esteja em uint8
             self.operations[relative_path].append(f"light_intensity_change_a_{a}")
 
@@ -142,7 +153,8 @@ class ImageProcessor:
         for relative_path, img in self.images.items():
             img = img + o1  # Somar a constante o1 a cada canal R, G, B
             img = np.clip(img, 0, 255)  # Garantir que os valores estejam no intervalo [0, 255]
-            self.images[relative_path] = img.astype(np.uint8)  # Garantir que a imagem esteja em uint8
+            self.images[relative_path] = img_as_ubyte(img)  
+            #self.images[relative_path] = img.astype(np.uint8)  # Garantir que a imagem esteja em uint8
             self.operations[relative_path].append(f"light_intensity_shift_o1_{o1}")
 
     def light_intensity_change_and_shift(self, a, o1):

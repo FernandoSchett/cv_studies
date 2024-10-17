@@ -5,7 +5,7 @@ import os
 
 imgs_folder = './imgs_selected'
 
-image_files = [f for f in os.listdir(imgs_folder) if f.endswith('.jpg') or f.endswith('.JPG') or f.endswith('.jpeg')]
+image_files = [f for f in os.listdir(imgs_folder) if f.endswith('.png') or f.endswith('.JPG') or f.endswith('.jpeg')]
 
 for filename in image_files:
     
@@ -26,10 +26,10 @@ for filename in image_files:
         if '_shift' in op[i]:
             imgs[i].int_shift(1.2)
         if '_change' in op[i]:
-            imgs[i].int_change(30)
+            imgs[i].int_change(10)
         plt.title(imgs[i].get_name())
         plt.imshow(imgs[i].image)
-    plt.subplots(1, len(imgs), sharex=True, gridspec_kw={'height_ratios': [2, 2, 2, 2]})
+    plt.subplots(1, len(imgs), sharex=True)
     plt.tight_layout()
     plt.savefig(filename + feat[0] + '_comp.png')
     plt.close()
