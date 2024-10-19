@@ -4,7 +4,7 @@ import os
 
 imgs_folder = './imgs_selected'
 
-image_files = [f for f in os.listdir(imgs_folder) if f.endswith('.jpg') or f.endswith('.JPG') or f.endswith('.jpeg')]
+image_files = [f for f in os.listdir(imgs_folder) if f.endswith('.png') or f.endswith('.JPG') or f.endswith('.jpeg')]
 
 for filename in image_files:
     image_path = os.path.join(imgs_folder, filename)

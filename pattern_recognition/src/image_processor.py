@@ -5,6 +5,8 @@ import numpy as np
 from glob import glob
 
 from skimage.filters import gaussian
+from skimage.feature import local_binary_pattern, graycomatrix, graycoprops
+from skimage.filters import sobel
 from skimage import exposure
 from skimage import img_as_ubyte
 
@@ -153,6 +155,7 @@ class ImageProcessor:
         for relative_path, img in self.images.items():
             img = img + o1  # Somar a constante o1 a cada canal R, G, B
             img = np.clip(img, 0, 255)  # Garantir que os valores estejam no intervalo [0, 255]
+            
             self.images[relative_path] = img_as_ubyte(img)  
             #self.images[relative_path] = img.astype(np.uint8)  # Garantir que a imagem esteja em uint8
             self.operations[relative_path].append(f"light_intensity_shift_o1_{o1}")
@@ -255,44 +258,91 @@ class ImageProcessor:
     
     ###### EXTRAIR FEATURES #########
     
-    def extract_rgb_histogram(self):
-        """Extract RGB histogram features from all images."""
-        features = {}
+    def _generate_feature_filename(self, feature_name, base_name="all_images", output_dir=None):
+        """Gera o nome do arquivo para salvar a matriz de features."""
+        file_name = f"{feature_name}_{base_name}.npy"
+        return os.path.join(output_dir, file_name) if output_dir else file_name
+
+    def gen_color_transform(self, output_dir=None):
+        """Apply color transform (convert to HSV) and save all HSV vectors in a single file."""
+        all_features = []
         for relative_path, img in self.images.items():
-            # Calcular o histograma para os canais R, G, B
+            img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+            hsv_vector = img_hsv.flatten()
+            all_features.append(hsv_vector)
+
+        feature_filename = self._generate_feature_filename("color_transform", "all_images", output_dir)
+        all_features_array = np.array(all_features)
+        np.save(feature_filename, all_features_array)
+
+    def gen_rgb_histogram(self, output_dir=None):
+        """Extract RGB histogram features from all images and save them in a single file."""
+        all_features = []
+        for relative_path, img in self.images.items():
             hist_r = cv2.calcHist([img], [0], None, [256], [0, 256])
             hist_g = cv2.calcHist([img], [1], None, [256], [0, 256])
             hist_b = cv2.calcHist([img], [2], None, [256], [0, 256])
-            # Concatenar os histogramas em uma única feature
             hist_rgb = np.concatenate((hist_r, hist_g, hist_b)).flatten()
-            features[relative_path] = hist_rgb
-        return features
+            all_features.append(hist_rgb)
 
-    def extract_o1_o2(self):
-        """Extract O1, O2 features (used to separate intensity of colors)."""
-        features = {}
+        feature_filename = self._generate_feature_filename("rgb_histogram", "all_images", output_dir)
+        all_features_array = np.array(all_features)
+        np.save(feature_filename, all_features_array)
+
+    def gen_o1_o2(self, output_dir=None):
+        """Extract O1, O2 features from all images and save them in a single file."""
+        all_features = []
         for relative_path, img in self.images.items():
-            # Convertendo para YUV e separando o canal de intensidade (Y)
             img_yuv = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
-            Y = img_yuv[:, :, 0]  # Intensidade
-            U = img_yuv[:, :, 1]  # O1
-            V = img_yuv[:, :, 2]  # O2
-            features[relative_path] = (U.mean(), V.mean())  # Média de O1 e O2
-        return features
+            U = img_yuv[:, :, 1]
+            V = img_yuv[:, :, 2]
+            o1_o2_vector = np.concatenate((U.flatten(), V.flatten()))
+            all_features.append(o1_o2_vector)
 
-    def extract_color_transform(self):
-        """Apply color transform (e.g., convert to HSV) and return mean of each channel."""
-        features = {}
+        feature_filename = self._generate_feature_filename("o1_o2", "all_images", output_dir)
+        all_features_array = np.array(all_features)
+        np.save(feature_filename, all_features_array)
+
+    def gen_sobel_features(self, output_dir=None):
+        """Extract Sobel features from all images and save them in a single file."""
+        all_features = []
         for relative_path, img in self.images.items():
-            # Convertendo para HSV
-            img_hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-            # Calcular a média de cada canal HSV
-            H_mean = img_hsv[:, :, 0].mean()
-            S_mean = img_hsv[:, :, 1].mean()
-            V_mean = img_hsv[:, :, 2].mean()
-            features[relative_path] = (H_mean, S_mean, V_mean)  # Retornar a média de H, S, V
-        return features
+            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            sobel_img = sobel(gray_img)
+            features = sobel_img.flatten()
+            all_features.append(features)
 
+        feature_filename = self._generate_feature_filename("sobel", "all_images", output_dir)
+        all_features_array = np.array(all_features)
+        np.save(feature_filename, all_features_array)
+
+    def gen_lbp_features(self, radius=1, n_points=8, method='uniform', output_dir=None):
+        """Extract LBP features from all images and save them in a single file."""
+        all_features = []
+        for relative_path, img in self.images.items():
+            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            lbp = local_binary_pattern(gray_img, n_points, radius, method)
+            features = lbp.flatten()
+            all_features.append(features)
+
+        feature_filename = self._generate_feature_filename("lbp", "all_images", output_dir)
+        all_features_array = np.array(all_features)
+        np.save(feature_filename, all_features_array)
+
+    def gen_glcm_features(self, distances=[1], angles=[0], levels=256, symmetric=True, normed=True, output_dir=None):
+        """Extract GLCM features from all images and save them in a single file."""
+        all_features = []
+        for relative_path, img in self.images.items():
+            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            glcm = graycomatrix(gray_img, distances, angles, levels=levels, symmetric=symmetric, normed=normed)
+            contrast = graycoprops(glcm, 'contrast')
+            features = contrast.flatten()
+            all_features.append(features)
+
+        feature_filename = self._generate_feature_filename("glcm", "all_images", output_dir)
+        all_features_array = np.array(all_features)
+        np.save(feature_filename, all_features_array)    
+ 
 
 if __name__ == "__main__":
     input_directory = 'data/bracs-binary/train'

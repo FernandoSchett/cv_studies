@@ -23,11 +23,17 @@ class Imagem:
         io.imsave(path, skimage.img_as_ubyte(self.image))
 
     def int_change(self, value):
-        self.image = self.image * value
+        self.image = (self.image * value).astype(np.int16)
+        #self.image = self.image.astype(np.uint8)
+        #self.image = np.clip(self.image, 0, 255)
+        #self.image = (self.image * value).astype(int)
+        #self.image = np.clip(self.image, 0, 255).astype(np.uint8)
         #self.image = exposure.rescale_intensity(self.image, in_range=(0, 255)).astype('uint16')
         
     def int_shift(self, value):
-        self.image = self.image + value
+        self.image = (self.image + value).astype(np.int16)
+        #self.image = np.clip(self.image, 0, 255)
+        #print(self.image)
         #self.image = exposure.rescale_intensity(self.image, in_range=(0, 255)).astype('uint16')
 
     def normalize(self):
@@ -66,7 +72,7 @@ class Imagem:
     def gen_hist_opp(self):
 
         r, g, b = self.image[:, :, 0], self.image[:, :, 1], self.image[:, :, 2]
-        O1 = (r - g) / np.sqrt(2)
+        O1 = (r + g) / np.sqrt(2)
         O2 = (r + g - 2 * b) / np.sqrt(6)
         O3 = (r + g + b) / np.sqrt(3)
         hist_O1, bins_O1 = histogram(O1)
