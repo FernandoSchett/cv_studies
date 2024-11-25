@@ -1,3 +1,10 @@
+"""
+    Author: Fernando Schettini
+    How to run: python3 image_processor.py
+    Description: Extrai todas as imagens de uma pasta e aplica operações de pre processamento nelas.
+    Last update: 25 november 2024.
+"""
+
 import os
 import cv2
 import matplotlib.pyplot as plt
@@ -141,6 +148,35 @@ class ImageProcessor:
             self.images[relative_path] = laplacian_img
             self.operations[relative_path].append("laplacian_sharpening")
     
+    def apply_lbp(self, n_points=24, radius=3, method='uniform'):
+        """Apply Local Binary Pattern (LBP) to all images and store the feature."""
+        for relative_path, img in self.images.items():
+            if len(img.shape) > 2:  # Convert to grayscale if in color
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            lbp = local_binary_pattern(img, n_points, radius, method)
+            self.images[relative_path] = lbp
+            self.operations[relative_path].append(f"LBP_{n_points}_{radius}_{method}")
+
+    def apply_sobel(self):
+        """Apply Sobel filter to all images and store the feature."""
+        for relative_path, img in self.images.items():
+            if len(img.shape) > 2:  # Convert to grayscale if in color
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            sobel_img = sobel(img)
+            self.images[relative_path] = sobel_img
+            self.operations[relative_path].append("sobel")
+    
+    def apply_haralick_contrast(self, distances=[1], angles=[0], levels=256, symmetric=True, normed=True):
+        """Calculate Haralick Contrast from GLCM and store the GLCM image with contrast as a feature."""
+        for relative_path, img in self.images.items():
+            # Convert to grayscale if the image is in color
+            if len(img.shape) > 2:
+                img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            
+            glcm = graycomatrix(img, distances=distances, angles=angles, levels=levels, symmetric=symmetric, normed=normed)
+            self.images[relative_path] = glcm[:, :, 0, 0]
+            self.operations[relative_path].append("haralick_contrast")
+
     def light_intensity_change(self, a):
         """Apply light intensity change (multiplication by factor `a`) to all images."""
         for relative_path, img in self.images.items():
@@ -302,46 +338,6 @@ class ImageProcessor:
         feature_filename = self._generate_feature_filename("o1_o2", "all_images", output_dir)
         all_features_array = np.array(all_features)
         np.save(feature_filename, all_features_array)
-
-    def gen_sobel_features(self, output_dir=None):
-        """Extract Sobel features from all images and save them in a single file."""
-        all_features = []
-        for relative_path, img in self.images.items():
-            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            sobel_img = sobel(gray_img)
-            features = sobel_img.flatten()
-            all_features.append(features)
-
-        feature_filename = self._generate_feature_filename("sobel", "all_images", output_dir)
-        all_features_array = np.array(all_features)
-        np.save(feature_filename, all_features_array)
-
-    def gen_lbp_features(self, radius=1, n_points=8, method='uniform', output_dir=None):
-        """Extract LBP features from all images and save them in a single file."""
-        all_features = []
-        for relative_path, img in self.images.items():
-            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            lbp = local_binary_pattern(gray_img, n_points, radius, method)
-            features = lbp.flatten()
-            all_features.append(features)
-
-        feature_filename = self._generate_feature_filename("lbp", "all_images", output_dir)
-        all_features_array = np.array(all_features)
-        np.save(feature_filename, all_features_array)
-
-    def gen_glcm_features(self, distances=[1], angles=[0], levels=256, symmetric=True, normed=True, output_dir=None):
-        """Extract GLCM features from all images and save them in a single file."""
-        all_features = []
-        for relative_path, img in self.images.items():
-            gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            glcm = graycomatrix(gray_img, distances, angles, levels=levels, symmetric=symmetric, normed=normed)
-            contrast = graycoprops(glcm, 'contrast')
-            features = contrast.flatten()
-            all_features.append(features)
-
-        feature_filename = self._generate_feature_filename("glcm", "all_images", output_dir)
-        all_features_array = np.array(all_features)
-        np.save(feature_filename, all_features_array)    
  
 
 if __name__ == "__main__":
